@@ -275,6 +275,7 @@ class base_html_playwright(Fetcher):
     proxy = None
 
     def __init__(self, proxy_override=None):
+        super().__init__()
 
         # .strip('"') is going to save someone a lot of time when they accidently wrap the env value
         self.browser_type = os.getenv("PLAYWRIGHT_BROWSER_TYPE", 'chromium').strip('"')
@@ -469,6 +470,8 @@ class base_html_webdriver(Fetcher):
     def __init__(self, proxy_override=None):
         from selenium.webdriver.common.proxy import Proxy as SeleniumProxy
 
+        super().__init__()
+
         # .strip('"') is going to save someone a lot of time when they accidently wrap the env value
         self.command_executor = os.getenv("WEBDRIVER_URL", 'http://browser-chrome:4444/wd/hub').strip('"')
 
@@ -566,6 +569,7 @@ class html_requests(Fetcher):
     fetcher_description = "Basic fast Plaintext/HTTP Client"
 
     def __init__(self, proxy_override=None):
+        super().__init__()
         self.proxy_override = proxy_override
 
     def run(self,
