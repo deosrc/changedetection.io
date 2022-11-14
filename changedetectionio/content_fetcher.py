@@ -66,13 +66,7 @@ class ReplyWithContentButNoText(Exception):
         return
 
 class Fetcher():
-    error = None
-    status_code = None
-    content = None
-    headers = None
-
     fetcher_description = "No description"
-    webdriver_js_execute_code = None
     xpath_element_js = """               
                 // Include the getXpath script directly, easier than fetching
                 !function(e,n){"object"==typeof exports&&"undefined"!=typeof module?module.exports=n():"function"==typeof define&&define.amd?define(n):(e=e||self).getXPath=n()}(this,function(){return function(e){var n=e;if(n&&n.id)return'//*[@id="'+n.id+'"]';for(var o=[];n&&Node.ELEMENT_NODE===n.nodeType;){for(var i=0,r=!1,d=n.previousSibling;d;)d.nodeType!==Node.DOCUMENT_TYPE_NODE&&d.nodeName===n.nodeName&&i++,d=d.previousSibling;for(d=n.nextSibling;d;){if(d.nodeName===n.nodeName){r=!0;break}d=d.nextSibling}o.push((n.prefix?n.prefix+":":"")+n.localName+(i||r?"["+(i+1)+"]":"")),n=n.parentNode}return o.length?"/"+o.reverse().join("/"):""}});
@@ -198,15 +192,23 @@ class Fetcher():
                 // Window.width required for proper scaling in the frontend
                 return {'size_pos':size_pos, 'browser_width': window.innerWidth};
     """
-    xpath_data = None
 
     # Will be needed in the future by the VisualSelector, always get this where possible.
-    screenshot = False
     system_http_proxy = os.getenv('HTTP_PROXY')
     system_https_proxy = os.getenv('HTTPS_PROXY')
 
-    # Time ONTOP of the system defined env minimum time
-    render_extract_delay = 0
+    def __init__(self):
+        self.error = None
+        self.status_code = None
+        self.content = None
+        self.headers = None
+
+        self.webdriver_js_execute_code = None
+        self.xpath_data = None
+        self.screenshot = False
+
+        # Time ONTOP of the system defined env minimum time
+        self.render_extract_delay = 0
 
     @abstractmethod
     def get_error(self):
